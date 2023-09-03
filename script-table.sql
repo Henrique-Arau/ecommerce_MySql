@@ -82,6 +82,10 @@ insert into productStorage (storageLocation, quantity) values
                          
 select * from productStorage;
 
+select c.idClient, count(*) from clients c inner join orders o ON c.idClient = o.idOrderClient
+                                           inner join productOrder p on p.idPOorder = o.idOrder
+							group by idClient;
+
 
 -- criar tabela fornecedor
 
