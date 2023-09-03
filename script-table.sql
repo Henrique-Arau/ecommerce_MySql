@@ -6,15 +6,21 @@ use ecommerce;
 
 -- criar as tabela cliente
 
+show tables;
 create table clients (
        idClient int auto_increment primary key,
        Fname varchar(10),
        MInit char(3),
        Lname varchar(20),
        CPF char(11) not null,
-       Address varchar(30),
+       Address varchar(50),
        constraint unique_cpf_client unique (CPF)
 );
+
+insert into Clients (Fname, MInit, Lname, CPF, Address) 
+        values ('Maria','M','Silva','123456789','rua do Novogama');
+        
+select * from clients;
 
 -- criar tabela produto
 
@@ -26,6 +32,10 @@ create table product (
        Avaliação float default 0,
        size varchar(10)
 );
+
+insert into product (Pname, classification_kids, category, avaliação, size) values
+                   ('Fone',false,'Eletrrônico','4',null);
+select * from product;
 
 --
 create table payments(
@@ -49,6 +59,11 @@ create table orders(
        constraint fk_orders_client foreign key (idOrderClient) references clients(idClient)
 );
 
+insert into orders (idOrderClient, orderStatus, orderDescription, sendValue, paymentCash) value
+                   (1,null,'compra via aplicativo',null,1); 
+                   
+select * from orders;
+
 -- Deletar a Tabela
 
 drop table orders;
@@ -61,6 +76,11 @@ create table productStorage(
        storageLocation varchar(255),
        quantity int default 0
 );
+
+insert into productStorage (storageLocation, quantity) values
+                         ('Rio de janeiro',1000);
+                         
+select * from productStorage;
 
 
 -- criar tabela fornecedor
@@ -110,6 +130,11 @@ create table productOrder(
       constraint fk_product_product1 foreign key (idPOorder) references orders(idOrder)
 );
 
+insert into productOrder (idPOproduct, idPOorder, poQuantity, poStatus) values
+                         (1,1,2,null);
+                         
+select * from productOrder;
+
 create table storageLocation(
       idLproduct int,
       idLstorage int,
@@ -118,6 +143,7 @@ create table storageLocation(
       constraint fk_product_seller2 foreign key (idLproduct) references product(idProduct),
       constraint fk_product_product2 foreign key (idLstorage) references productStorage(idProdStorage)
 );
+
 
 desc storageLocation;
 
